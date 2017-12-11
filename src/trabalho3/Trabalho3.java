@@ -10,11 +10,15 @@ import javax.swing.JOptionPane;
 public class Trabalho3 {
     static Veiculo Veiculos[]=new Veiculo[30];//Vetor de Veículos
     static int i=1;//Índice/Código dos veículos
-    static int aux;//Auxiliar quebra-galho
+    static int aux;//Auxiliar
     static int c1 = 0, c2 = 0, ca=0;//Contadores
   
     public static void cancel(){//Mensagem informando que a operação foi cancelada
         JOptionPane.showMessageDialog(null,"Operação cancelada.");
+    }
+    
+    public static void erro(){//Mensagem informando que a operação foi cancelada
+        JOptionPane.showMessageDialog(null,"Código inválido!","Erro",JOptionPane.ERROR_MESSAGE);
     }
     
     public static void cadastrar(){//Método de cadastro
@@ -42,10 +46,11 @@ public class Trabalho3 {
                 JOptionPane.showMessageDialog(null,"Operação concluída.");                
             }
             else{
-                cancel();
+                JOptionPane.showMessageDialog(null,"O período de locação é de no máximo 30 dias!","Erro",JOptionPane.ERROR_MESSAGE);  
             }
         }
         else{
+            erro();
         }
     }
     
@@ -73,9 +78,10 @@ public class Trabalho3 {
                 c2--;
                 Veiculos[aux].setStatus("Disponivel");
             }
-            
         }
-        
+        else{
+            erro();
+        }
         
     }
     
@@ -85,40 +91,58 @@ public class Trabalho3 {
             Veiculos[aux].excluir();
             c1 --;
         }
-    }
-    
-    public static void consultar(){//Método pra consultar (Completo porém aprimorável)
-        int j;
-        for(aux=1;aux<i;aux++){
-            if(Veiculos[aux].isFlag()==true){
-                j=JOptionPane.showConfirmDialog(null,
-                "\nCódigo do veículo:"+Veiculos[aux].getCod()
-                +"\nStatus do veículo:"+Veiculos[aux].getStatus()
-                +"\nModelo do veículo:"+Veiculos[aux].getModelo()
-                +"\nSIM para ver mais detalhes\nNÃO para ver o próximo veículo\nCANCELAR para retornar à tela inicial"
-                ,"",JOptionPane.YES_NO_CANCEL_OPTION);
-                
-                if(j==2)
-                    break;
-                
-                else if (j==0){
-                    JOptionPane.showMessageDialog(null,
-                        "\nCódigo do veículo:"+Veiculos[aux].getCod()
-                        +"\nStatus do veículo:"+Veiculos[aux].getStatus()
-                        +"\nMarca do veículo:"+Veiculos[aux].getMarca()
-                        +"\nModelo do veículo:"+Veiculos[aux].getModelo()
-                        +"\nAno do veículo: "+Veiculos[aux].getAno()
-                        +"\nValor diário do veículo: "+Veiculos[aux].getValor()
-                        );
-                }
-                
-            }
-            
+        else{
+            erro();
         }
     }
     
+    public static void consultar(){//Método pra consultar
+        int j;
+        if(c1>0)
+        {
+            for(aux=1;aux<i;aux++){
+              if(Veiculos[aux].isFlag()==true){
+                  j=JOptionPane.showConfirmDialog(null,
+                  "\nCódigo do veículo:"+Veiculos[aux].getCod()
+                  +"\nStatus do veículo:"+Veiculos[aux].getStatus()
+                  +"\nModelo do veículo:"+Veiculos[aux].getModelo()
+                  +"\nSIM para ver mais detalhes\nNÃO para ver o próximo veículo\nCANCELAR para retornar à tela inicial"
+                  ,"",JOptionPane.YES_NO_CANCEL_OPTION);
+
+                  if(j==2)
+                      break;
+
+                  else if (j==0){
+                      JOptionPane.showMessageDialog(null,
+                          "\nCódigo do veículo:"+Veiculos[aux].getCod()
+                          +"\nStatus do veículo:"+Veiculos[aux].getStatus()
+                          +"\nMarca do veículo:"+Veiculos[aux].getMarca()
+                          +"\nModelo do veículo:"+Veiculos[aux].getModelo()
+                          +"\nAno do veículo: "+Veiculos[aux].getAno()
+                          +"\nValor diário do veículo: "+Veiculos[aux].getValor()
+                          );
+                  }
+              }
+          }  
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Não há veículos cadastrados!","Erro",JOptionPane.ERROR_MESSAGE);
+        }            
+    }    
     public static void main(String[] args) {
+        for(int cont=0;cont<30;cont++){
+           Veiculos[cont]=new Veiculo();
+           Veiculos[cont].setMarca("");
+           Veiculos[cont].setModelo("");
+           Veiculos[cont].setAno(0);
+           Veiculos[cont].setValor(0);
+           Veiculos[cont].setCod(cont);
+           Veiculos[cont].setStatus("");
+           Veiculos[cont].setFlag(false);
+        }  
+         
         
+    
         Date dataa = new Date();
         data dat=new data();
         SimpleDateFormat f = new SimpleDateFormat("ddMMyyyy");
@@ -144,7 +168,7 @@ public class Trabalho3 {
         d2=a%10;        
         dat.setDia(d1+d2*10);                
         //Botões
-        Object[] op = {"Consultar veículos","Adicionar veículos","Alugar/reservar veículos","Devolver/liberar veículos","Excluir veículos","Avançar data atual","Sair"};
+        Object[] op = {"Consultar veículos","Adicionar veículos","Alugar veículos","Devolver veículos","Excluir veículos","Avançar data atual","Sair"};
         int escolha;        
         do{
             escolha = JOptionPane.showOptionDialog(null,
