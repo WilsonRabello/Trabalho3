@@ -5,6 +5,8 @@ Dupla:
 Francisco Gilson Pereira Almeida Filho - 401066
 José Wilson Alves Rabello Júnior - 397725
 
+O programa foi feito utilizando a linguagem Java, na IDE Netbeans, é recomendado seu uso para a execução do programa. Ele possui 3 classes, e a principal (Trabalho3) possui a função main, essa deve ser executada para dae inicio ao programa.
+
 Ao executar o programa, você poderá escolher uma das 7 opções disponíveis na tela inicial, sendo elas:
 
 1-Consultar veículos:
